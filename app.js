@@ -18,7 +18,7 @@ program
     .description('Listing all tasks')
     .option('--title <title>', 'Title of the task')
     .action(function (options) {
-        console.log('listing all tasks ' + options.title);
+        notes.listNotes();
     });
 
 // reading a command
@@ -27,7 +27,7 @@ program
     .description('reading task')
     .option('--title <title>', 'Title of the task')
     .action(function (options) {
-        console.log(`Reading task ${options.title}`);
+        notes.readNotes(options.title);
     });
 
 //removing command
@@ -36,7 +36,7 @@ program
     .description('Removing task')
     .option('--title <title>', 'Title of the task')
     .action(function (options) {
-        notes.removeNote(options.title);
+        notes.removeNotes(options.title);
     });
 
 program.parse();

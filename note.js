@@ -37,17 +37,48 @@ const saveNotes = (notes) => {
     fs.writeFileSync('notes.json', dataJSON);
 };
 
-const removeNote = (title) => {
+//read  notes
+const readNotes = (title) => {
     const notes = loadNotes();
-    const notesToKeep = notes.filter((note) => {
-        !note.title === title;
+    const foundNotes = notes.find((note) => {
+        return note.title === title;
     });
 
-    console.log(notesToKeep);
+    if (!foundNotes) {
+        console.log(chalk.red('note not found!!'));
+    } else {
+        console.log(chalk.blue('Your note'));
+        console.log(chalk.green(`${foundNotes.title} : ${foundNotes.body}`));
+    }
+};
+
+//listing all notes
+const listNotes = () => {
+    const notes = loadNotes();
+    console.log(chalk.blue('Your notes'));
+    const allNotes = notes.forEach((note) => {
+        console.log(chalk.green(`${note.title} : ${note.body}`));
+    });
+};
+
+const removeNotes = (title) => {
+    const notes = loadNotes();
+    const notesToKeep = notes.filter((note) => {
+        return note.title !== title;
+    });
+
+    if (notes.length > notesToKeep) {
+        console.log(chalk.red('Note not found'));
+    } else {
+        console.log(chalk.green('note removed'));
+        saveNotes(notesToKeep);
+    }
 };
 
 module.exports = {
     getNote,
     addNote,
-    removeNote,
+    removeNotes,
+    readNotes,
+    listNotes,
 };
